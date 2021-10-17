@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4b48cf0f-5489-44f0-a433-12ab48b9dd50}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{e6c0b0b2-4a73-4ca1-a5be-f015561b44d7}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{9addf912-fce8-4c2c-b3f2-5236deb8e2d7}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;manifest</Extensions>
+    </Filter>
+    <Filter Include="Table">
+      <UniqueIdentifier>{bea7edd0-fa47-40fd-aaba-25a5e93ea2f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dialog">
+      <UniqueIdentifier>{807292d4-3163-4dca-9e8d-d4893fe66c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dump">
+      <UniqueIdentifier>{3db228c4-dbff-4450-85f8-314ca7ff3424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ChildWindows">
+      <UniqueIdentifier>{051fdd4e-6191-44b2-a4ac-b3509227af33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{42cf5fbe-c781-42a0-bd4c-c700bd89ea17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="windows">
+      <UniqueIdentifier>{502e45f3-a79e-409c-868f-695db916ba77}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ZllyDbg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SearchBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AboutDlg.cpp">
+      <Filter>dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="AttachDlg.cpp">
+      <Filter>dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DbgEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadTable.cpp">
+      <Filter>Table</Filter>
+    </ClCompile>
+    <ClCompile Include="Table.cpp">
+      <Filter>Table</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessTable.cpp">
+      <Filter>Table</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryTable.cpp">
+      <Filter>Table</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTable.cpp">
+      <Filter>Table</Filter>
+    </ClCompile>
+    <ClCompile Include="Dump.cpp">
+      <Filter>dump</Filter>
+    </ClCompile>
+    <ClCompile Include="FileDlg.cpp">
+      <Filter>dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="CpuAsm.cpp">
+      <Filter>ChildWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CpuDump.cpp">
+      <Filter>ChildWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CpuStack.cpp">
+      <Filter>ChildWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CpuInfo.cpp">
+      <Filter>ChildWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="CpuReg.cpp">
+      <Filter>ChildWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="Disassembly.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SortHelpler.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="CpuHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="CRipple.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryFrm.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFrm.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadFrm.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="CpuFrm.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakpointHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakpointFrm.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakpointTable.cpp">
+      <Filter>Table</Filter>
+    </ClCompile>
+    <ClCompile Include="NameHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="DataHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="TraceHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutDlg.h">
+      <Filter>dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="AttachDlg.h">
+      <Filter>dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DbgEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadTable.h">
+      <Filter>Table</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
+      <Filter>Table</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessTable.h">
+      <Filter>Table</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryTable.h">
+      <Filter>Table</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTable.h">
+      <Filter>Table</Filter>
+    </ClInclude>
+    <ClInclude Include="Dump.h">
+      <Filter>dump</Filter>
+    </ClInclude>
+    <ClInclude Include="Internals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileDlg.h">
+      <Filter>dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuAsm.h">
+      <Filter>ChildWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuDump.h">
+      <Filter>ChildWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuStack.h">
+      <Filter>ChildWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuInfo.h">
+      <Filter>ChildWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuReg.h">
+      <Filter>ChildWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Disassembly.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SortHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="CpuFrm.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadFrm.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="SearchBar.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFrm.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryFrm.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="CRipple.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakpointHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakpointFrm.h">
+      <Filter>windows</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakpointTable.h">
+      <Filter>Table</Filter>
+    </ClInclude>
+    <ClInclude Include="NameHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="TraceHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ZllyDbg.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ZllyDbg.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ZllyDbgDoc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\icon2.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ico00001.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ico00002.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bmp00001.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="C:\Users\红细胞\Desktop\back.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\back.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ico00003.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,556 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "atlres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MDICHILD MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Attach",                     ID_FILE_ATTACH
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "&Executable modules\tAlt+E",  ID_VIEW_MODULES
+        MENUITEM "&Memory\tAlt+M",              ID_VIEW_MEMORY
+        MENUITEM "&Threads",                    ID_VIEW_THREADS
+        MENUITEM "&CPU\tAlt+C",                 ID_VIEW_CPU
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "&Tile",                       ID_WINDOW_TILE_HORZ
+        MENUITEM "Arrange &Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About ZllyDbg",              ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MDICHILD_MODULE     ICON                    "res\\icon1.ico"
+
+IDR_MDICHILD_THREAD     ICON                    "res\\icon2.ico"
+
+IDR_MDICHILD_MEMORY     ICON                    "res\\ico00001.ico"
+
+IDR_MDICHILD_CPU        ICON                    "res\\ico00002.ico"
+
+IDR_MDICHILD_BPOINT     ICON                    "res\\ico00003.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SEARCHBAR DIALOGEX 0, 0, 309, 28
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Type to filter:",IDC_STATIC,7,10,47,11
+    EDITTEXT        IDC_SEARCH,60,7,160,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Search",IDC_DOSEARCH,223,7,33,14
+    PUSHBUTTON      "Clear",IDC_CLEAR,271,7,31,14
+END
+
+IDD_GET_PROC DIALOGEX 0, 0, 469, 181
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Select process to attach"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Attach",IDC_ATTACH,330,153,50,14
+    PUSHBUTTON      "Cancel",IDC_CANCEL,395,153,50,14
+END
+
+IDD_OFNHOOK_ARG DIALOGEX 0, 0, 290, 42
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CONTROL | WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_COMBO,55,13,215,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Arguments:",IDC_STATIC,15,14,38,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_SEARCHBAR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 21
+    END
+
+    IDD_GET_PROC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 462
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 174
+    END
+
+    IDD_OFNHOOK_ARG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 35
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_SEARCHBAR AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_GET_PROC AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_OFNHOOK_ARG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_GIRL                BITMAP                  "res\\back.bmp"
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 英语(美国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Attach",                     ID_FILE_ATTACH
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "&Executable modules\tAlt+E",  ID_VIEW_MODULES
+        MENUITEM "&Memory\tAlt+M",              ID_VIEW_MEMORY
+        MENUITEM "&Threads",                    ID_VIEW_THREADS
+        MENUITEM "&CPU\tAlt+C",                 ID_VIEW_CPU
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About ZllyDbg",              ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\ZllyDbg.ico"
+
+IDR_MDICHILD            ICON                    "res\\ZllyDbgDoc.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 261, 146
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""atlres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR 17, 17
+BEGIN
+    BUTTON      ID_FILE_NEW
+    SEPARATOR
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_DBG_RESTART
+    BUTTON      ID_DBG_CLOSE
+    SEPARATOR
+    BUTTON      ID_DBG_RUN
+    BUTTON      ID_DBG_PAUSE
+    SEPARATOR
+    BUTTON      ID_DBG_STEPIN
+    BUTTON      ID_DBG_STEPOVER
+    SEPARATOR
+    BUTTON      ID_DBG_TRIN
+    BUTTON      ID_DBG_TROVER
+    SEPARATOR
+    BUTTON      ID_DBG_TILLRET
+    SEPARATOR
+    BUTTON      ID_CPU_GOTO
+    SEPARATOR
+    BUTTON      ID_VIEW_LOG
+    BUTTON      ID_VIEW_MODULES
+    BUTTON      ID_VIEW_MEMORY
+    BUTTON      ID_VIEW_THREADS
+    BUTTON      ID_VIEW_WINDOWS
+    BUTTON      ID_VIEW_HANDLES
+    BUTTON      ID_VIEW_CPU
+    BUTTON      ID_VIEW_PATCHES
+    BUTTON      ID_VIEW_STACK
+    BUTTON      ID_VIEW_BREAKS
+    BUTTON      ID_VIEW_REFERS
+    BUTTON      ID_VIEW_TRACE
+    BUTTON      ID_VIEW_SOURCE
+    SEPARATOR
+    BUTTON      ID_APP_OPTIONS
+    BUTTON      ID_APP_APPEAR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    "E",            ID_VIEW_MODULES,        VIRTKEY, ALT, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "ZllyDbg Module"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "ZllyDbg"
+            VALUE "LegalCopyright", "Copyright 2020"
+            VALUE "OriginalFilename", "ZllyDbg.exe"
+            VALUE "ProductName", "ZllyDbg Module"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "ZllyDbg"
+    IDR_MDICHILD            "Document"
+    ID_STATUS_PANE          "Ready"
+    IDR_MDICHILD_THREAD     "Threads"
+    IDR_MDICHILD_MEMORY     "Memory map"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open a new executable (F3).\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application\nExit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_SCSIZE          "Change the window size"
+    ATL_IDS_SCMOVE          "Change the window position"
+    ATL_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    ATL_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    ATL_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    ATL_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    ATL_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_SCRESTORE       "Restore the window to normal size"
+    ATL_IDS_SCTASKLIST      "Activate Task List"
+    ATL_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_IDLEMESSAGE     "ZllyDbg v1.0.0"
+END
+
+STRINGTABLE
+BEGIN
+    ATL_IDS_MRU_FILE        "Open this document"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_MEMORY          "Show Memory window (Alt+M).\nMemory"
+    ID_VIEW_THREADS         "Show threads.\nThreads"
+    ID_VIEW_CPU             "Show CPU (Alt+C).\nCPU"
+    ID_DBG_RESTART          "Restart program (Ctrl+F2).\nRestart"
+    ID_DBG_CLOSE            "Close program (Alt+F2)\\Close"
+    ID_DBG_RUN              "Run program (F9).\nRun"
+END
+
+STRINGTABLE
+BEGIN
+    ID_DBG_PAUSE            "Pause execution (F12).\nPause"
+    ID_DBG_STEPIN           "Step into (F7).\nSTEPIN"
+    ID_DBG_STEPOVER         "Step over (F8).\nSTEPOVER"
+    ID_DBG_TILLRET          "Execute till return (Ctrl+F9).\nTILLRET"
+    ID_DBG_TRIN             "Trace into (Ctrl+F11).\nTRIN"
+    ID_DBG_TROVER           "Trace over (Ctrl+F12).\nTROVER"
+    ID_CPU_GOTO             "Go to address in Disassembler.\nGOTO"
+    ID_VIEW_LOG             "Show Log window (Alt+L).\nLog"
+    ID_VIEW_MODULES         "Show Modules window (Alt+E).\nModules"
+    ID_VIEW_WINDOWS         "Show windows.\nWindows"
+    ID_VIEW_HANDLES         "Show handles.\nHandles"
+    ID_VIEW_PATCHES         "Show patches (Ctrl+P)\nPatches"
+    ID_VIEW_STACK           "Show call stack (Alt+K)\nStack"
+    ID_VIEW_BREAKS          "Show Breakpoints window (Alt+B).\nBreaks"
+    ID_VIEW_TRACE           "Show run trace.\nTrace"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_SOURCE          "Show source.\nSource"
+    ID_APP_OPTIONS          "Debugging options (Alt+O).\nOptions"
+    ID_APP_APPEAR           "Appearance options.\nAppearance"
+    ID_VIEW_REFERS          "Show references.\nREFERS"
+END
+
+STRINGTABLE
+BEGIN
+    IDR_MDICHILD_MODULE     "Executable modules"
+END
+
+STRINGTABLE
+BEGIN
+    IDR_MDICHILD_CPU        "CPU"
+END
+
+#endif    // 英语(美国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
