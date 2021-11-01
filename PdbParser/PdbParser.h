@@ -44,22 +44,22 @@ enum class SymbolTag{
 	Compiland,
 	CompilandDetails,
 	CompilandEnv,
-	Function,
+	Function,		// 函数
 	Block,
-	Data,
+	Data,			// 变量，函数实参，复合结构字段，枚举值
 	Annotation,
 	Label,
 	PublicSymbol,
-	UDT,
-	Enum,
-	FunctionType,
-	PointerType,
-	ArrayType,
-	BaseType,
-	Typedef,
-	BaseClass,
-	Friend,
-	FunctionArgType,
+	UDT,			// 用户定义类型，例如struct,class和union
+	Enum,			// 枚举类型
+	FunctionType,	// 函数类型
+	PointerType,	// 指针类型
+	ArrayType,		// 数组类型
+	BaseType,		// 基本类型
+	Typedef,		// typedef 类型
+	BaseClass,		// 基类类型
+	Friend,			// 友元类型
+	FunctionArgType,// 函数形参类型
 	FuncDebugStart,
 	FuncDebugEnd,
 	UsingNamespace,
@@ -146,25 +146,38 @@ enum class SymbolFlags : unsigned {
 	PublicCode = 0x400000
 };
 
+enum class SymbolOptions : DWORD {
+	None = 0,
+	AllowAbsoluteSymbols = SYMOPT_ALLOW_ABSOLUTE_SYMBOLS,
+	AllowZeroAddress = SYMOPT_ALLOW_ZERO_ADDRESS,
+	AutoPublic = SYMOPT_AUTO_PUBLICS,
+	CaseInsensitive = SYMOPT_CASE_INSENSITIVE,
+	Debug = SYMOPT_DEBUG,
+	DeferredLoads = SYMOPT_DEFERRED_LOADS,
+	DisableSymSrvAutoDetect = SYMOPT_DISABLE_SYMSRV_AUTODETECT,
+	ExactSymbols = SYMOPT_EXACT_SYMBOLS,
+	FailCriticalErrors = SYMOPT_FAIL_CRITICAL_ERRORS,
+	FavorCompressed = SYMOPT_FAVOR_COMPRESSED,
+	FlatDirectory = SYMOPT_FLAT_DIRECTORY,
+	IgnoreCodeViewRecord = SYMOPT_IGNORE_CVREC,
+	IgnoreImageDir = SYMOPT_IGNORE_IMAGEDIR,
+	IgnoreNTSymbolPath = SYMOPT_IGNORE_NT_SYMPATH,
+	Include32BitModules = SYMOPT_INCLUDE_32BIT_MODULES,
+	LoadLines = SYMOPT_LOAD_LINES,
+	NoCPP = SYMOPT_NO_CPP,
+	NoImageSearch = SYMOPT_NO_IMAGE_SEARCH,
+	NoPrompts = SYMOPT_NO_PROMPTS,
+	NoPublics = SYMOPT_NO_PUBLICS,
+	NoUnqualifiedLoads = SYMOPT_NO_UNQUALIFIED_LOADS,
+	Overwrite = SYMOPT_OVERWRITE,
+	PublicsOnly = SYMOPT_PUBLICS_ONLY,
+	Secure = SYMOPT_SECURE,
+	UndecorateNames = SYMOPT_UNDNAME
+};
+
 struct SymbolInfo : SYMBOL_INFO {
 	// member name cannot be larger than this (docs says 2000, but seems wasteful in practice)
 	//const int MaxSymbolLen = 500;
 
 };
 
-class SymbolHandler final{
-public:
-	SymbolHandler(HANDLE hProcess, bool ownHandle);
-
-	void LoadSymbolsForModule(std::string imageName,DWORD64 dllBase = 0,HANDLE hFile = nullptr);
-	void EnumSymbols(std::string mask = "*!*");
-
-	void EnumTypes(std::string mask = "*");
-	ULONG64 GetSymbolAddressFromName(std::string Name);
-	DWORD GetStructMemberOffset(std::string Name,std::string memberName);
-
-private:
-	HANDLE _hProcess;
-	bool _ownHandle;
-	DWORD64 _baseAddress = 0;
-};
