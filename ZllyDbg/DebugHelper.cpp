@@ -7,14 +7,14 @@
 #include "MemoryHelper.h"
 #include "Disassembly.h"
 #include "ThreadFrm.h"
+#include "BreakpointFrm.h"
 
 extern DbgInfo g_DbgInfo;
-bool g_enableHBP = true;
-
-
+bool g_enableHBrkPoint = true;
+bool g_useHBrkStep = false;
 
 void DebugHelper::Animate(int animation) {
-	_animation = animation;
+	g_DbgInfo.animation = animation;
 }
 
 // Continues execution of the debugged program. 
@@ -38,10 +38,10 @@ void DebugHelper::Animate(int animation) {
 // 
 // OllyDbg Plugin API v1.10
 int DebugHelper::Go(ulong threadid, ulong tilladdr, int stepmode, int givechance, int backupregs) {
-	if (!g_DbgInfo.DbgType)
+	if (!g_DbgInfo.eventType)
 		return -1;
 	if (!threadid)
-		threadid = g_DbgInfo.EventTID;
+		threadid = g_DbgInfo.expTid;
 	t_thread* t;
 	t = ThreadHelper::Findthread(threadid);
 	if (!t)
@@ -51,22 +51,22 @@ int DebugHelper::Go(ulong threadid, ulong tilladdr, int stepmode, int givechance
 		return -1;
 	}
 	if (stepmode) {
-		if (!_animation) {
-			g_DbgInfo.BpType |= HB_TEMP;
+		if (!g_DbgInfo.animation) {
+			g_DbgInfo.bpType |= HB_TEMP;
 		}
-		g_DbgInfo.StepMode = stepmode;
-		g_DbgInfo.GiveChance = givechance;
+		g_DbgInfo.stepmode = stepmode;
+		g_DbgInfo.givechance = givechance;
 	}
 	else {
-		stepmode = g_DbgInfo.StepMode;
-		givechance = g_DbgInfo.GiveChance;
+		stepmode = g_DbgInfo.stepmode;
+		givechance = g_DbgInfo.givechance;
 	}
 	ulong ip = t->reg.ip;
 	ulong ecx = t->reg.r[1];
-	if (ip != g_DbgInfo.ExpAddr || ecx != g_DbgInfo.ECX) {
-		g_DbgInfo.BpType = HB_FREE;
-		g_DbgInfo.ExpAddr = ip;
-		g_DbgInfo.ECX = ecx;
+	if (ip != g_DbgInfo.expIp || ecx != g_DbgInfo._ecx) {
+		g_DbgInfo.bpType = HB_FREE;
+		g_DbgInfo.expIp = ip;
+		g_DbgInfo._ecx = ecx;
 	}
 	uchar cmd[16];
 	ulong len = MemoryHelper::Readcommand(ip, cmd);
@@ -79,6 +79,7 @@ int DebugHelper::Go(ulong threadid, ulong tilladdr, int stepmode, int givechance
 		int cmdType = d.cmdtype & C_TYPEMASK;
 		switch (cmdType)
 		{
+			// 过滤串操作指令
 			case C_REP:
 
 				break;
@@ -120,14 +121,15 @@ int DebugHelper::Go(ulong threadid, ulong tilladdr, int stepmode, int givechance
 			else
 			{
 				t->reg.singlestep |= 1;
-				_hardBpType = 2;
+				t->reg.modified = 1;
+				_hardBpType = HB_ACCESS;
 			}
 		}
 	}
 	else {
 
 	}
-
+	_hardBP[0].type = _hardBpType;
 	return ContinueExecute(threadid, givechance, backupregs, 0);
 }
 
@@ -150,7 +152,8 @@ int DebugHelper::Setbreakpoint(ulong addr, ulong type, uchar cmd) {
 
 // Sets new INT3 breakpoint or changes type of existing breakpoint at specified address. 
 // Returns 0 on success and -1 on error (i.e. breakpoint was neither set nor restored). 
-// If bit TY_KEEPCOND in type is set, condition, explanation and expression associated with breakpoint (explained here) remain unchanged, otherwise they are removed. If bit TY_SETCOUNT is set or breakpoint is absent, sets specified pass count, otherwise pass count remains unchanged.
+// If bit TY_KEEPCOND in type is set, condition, explanation and expression associated with breakpoint (explained here) remain unchanged, otherwise they are removed. 
+// If bit TY_SETCOUNT is set or breakpoint is absent, sets specified pass count, otherwise pass count remains unchanged.
 // 
 // int Setbreakpointext(ulong addr,ulong type,uchar cmd,ulong passcount);
 // 
@@ -186,8 +189,63 @@ int DebugHelper::Setbreakpoint(ulong addr, ulong type, uchar cmd) {
 // 
 // OllyDbg Plugin API v1.10
 int DebugHelper::Setbreakpointtext(ulong addr, ulong type, char cmd, ulong passcount) {
+	t_bpoint bp;
+	bp.addr = addr;
+	bp.type = TY_NORMAL;
+	bp.cmd = 0xcc;
+	bp.passcount = passcount;
+	CBreakpointFrame::m_BreakpointTable->Addsorteddata(bp);
+	int bpType = type & (TY_DISABLED | TY_ACTIVE | TY_TEMP | TY_STOPAN | TY_ONESHOT);
+	if ((bpType & TY_ACTIVE) != 0) { // 启用断点
+		bp.type = (bp.type & ~(TY_DISABLED | TY_ACTIVE | TY_TEMP | TY_ONESHOT)) | TY_ACTIVE;
+	}
+	else if ((bpType & TY_DISABLED) != 0) {// 禁用断点
+		bp.type = (bp.type & ~(TY_DISABLED | TY_ACTIVE | TY_TEMP | TY_ONESHOT)) | TY_DISABLED;
+	}
+	else {
+		bp.type |= bpType;
+	}
+	if (g_Status == STAT_RUNNING) {
+		int n = ThreadHelper::GetThreadCount();
+		if (n > 0) {
+			auto threads = ThreadHelper::GetThreads();
+			for (int i = 0; i < n; i++) {
+				::SuspendThread(threads[i].handle);
+			}
+		}
+	}
 
+	if ((bp.type & TY_SET) != 0) {
+		if ((bp.type & (TY_ACTIVE | TY_ONESHOT)) == 0) {
+
+		}
+	}
 	return -1;
+}
+
+// Sets temporary or one-shot breakpoint on execution. If possible, sets hardware breakpoint, otherwise INT3. OllyDbg automatically removes temporary and one-shot breakpoints.
+// 
+// void Tempbreakpoint(ulong addr,int mode);
+// 
+// Parameters:
+// 
+// addr - code address where temporary breakpoint should be set;
+// 
+// mode - type of breakpoint to set:
+// 
+// TY_ONESHOT|TY_KEEPCOND  Set one-shot breakpoint. OllyDbg automatically removes one-shot breakpoint when hit and pauses debugged application
+// TY_ONESHOT|TY_KEEPCOND|TY_STOPAN    Same as above, additionally stops any kind of trace or animation when hit
+// TY_TEMP|TY_KEEPCOND Set temporary breakpoint. OllyDbg automatically removes temporary breakpoint when hit and immediately continues execution
+// Any other combination   Sets INT3 breakpoint of specified type
+// 
+// OllyDbg Plugin API v1.10
+void DebugHelper::Tempbreakpoint(ulong addr, int mode) {
+	if (g_enableHBrkPoint && g_useHBrkStep && mode == (TY_ONESHOT | TY_KEEPCOND) && !Sethardbreakpoint(addr, 1, HB_ONESHOT)
+		|| mode == (TY_ONESHOT | TY_KEEPCOND | TY_STOPAN) && !Sethardbreakpoint(addr, 1, HB_STOPAN)
+		|| mode == (TY_TEMP | TY_KEEPCOND) && !Sethardbreakpoint(addr, 1, HB_TEMP))
+		g_DbgInfo.bpType &= ~1;
+	else
+		Setbreakpointtext(addr, mode, 0, 0);
 }
 
 int DebugHelper::ContinueExecute(ulong threadid, int givechance, int backupregs, int bypass) {
@@ -198,9 +256,10 @@ int DebugHelper::ContinueExecute(ulong threadid, int givechance, int backupregs,
 	}*/
 	DWORD status;
 	int ret = -1;
-	if (g_DbgInfo.DbgType == DBG_ATTACH || g_DbgInfo.DbgType == DBG_CREATE || g_DbgInfo.DbgType == DBG_DLL) {
+	if (g_DbgInfo.eventType == 1 || g_DbgInfo.eventType == 2 || g_DbgInfo.eventType == 3) {
+		WriteModifiedRegister(backupregs);
 		if (!bypass && (givechance && 
-			g_DbgInfo.DbgType == DBG_CREATE || g_DbgInfo.DbgType == DBG_DLL) 
+			g_DbgInfo.eventType == 2 || g_DbgInfo.eventType == 3) 
 			&& g_DbgInfo.Event.dwDebugEventCode == EXCEPTION_DEBUG_EVENT) {
 			status = DBG_EXCEPTION_NOT_HANDLED;
 		}
@@ -215,15 +274,17 @@ int DebugHelper::ContinueExecute(ulong threadid, int givechance, int backupregs,
 		else {
 			ThreadHelper::Restroeallthreads();
 		}
-		/*bool success = ::ContinueDebugEvent(g_DbgInfo.Event.dwProcessId, g_DbgInfo.Event.dwThreadId, status);
-		if (ERROR_INVALID_HANDLE == ::GetLastError())
-			success = ::ContinueDebugEvent(g_DbgInfo.Event.dwProcessId, g_mainThreadId, status);*/
-		g_DbgInfo.ContinueStatus = status;
-		::SetEvent(g_DbgInfo.hEvent);
+		bool success = ::ContinueDebugEvent(g_DbgInfo.Event.dwProcessId, g_DbgInfo.Event.dwThreadId, status);
+		
 		// g_DbgInfo.DbgType = DBG_NONE;
+		if (success && !bypass) {
+			DbgEngine::SetStatus(STAT_RUNNING);
+		}
 		ret = 0;
+		if (!success)
+			return -1;
 	}
-	else if (g_DbgInfo.DbgType == DBG_UNKNOWN) {
+	else if (g_DbgInfo.eventType == 4) {
 
 	}
 	else {
@@ -303,7 +364,7 @@ int DebugHelper::WriteModifiedRegister(int backup) {
 			t.context.EFlags |= 0x100;
 			t.reg.dr6 &= 0xFFFFFFF0;
 		}
-		if (g_enableHBP) {
+		if (g_enableHBrkPoint) {
 			// 调试控制寄存器 dr7 定义断点的中断条件
 			DWORD dr7 = 0x400;
 			// 调试地址寄存器 dr0~dr3
@@ -313,7 +374,7 @@ int DebugHelper::WriteModifiedRegister(int backup) {
 			pCtx->Dr3 = _hardBP[3].addr;
 			int RW;
 			for (int i = 0; i < 4; i++) {
-				if (_hardBP[i].type && (g_DbgInfo.BpType & 1) == 0) {
+				if (_hardBP[i].type && (g_DbgInfo.bpType & 1) == 0) {
 					int L = (1 << (2 * i)) | dr7;
 					switch (_hardBP[i].type)
 					{
@@ -344,10 +405,12 @@ int DebugHelper::WriteModifiedRegister(int backup) {
 							RW = 0;
 							break;
 					}
-					if (_hardBP[i - 1].type == HB_ACCESS)
-						RW |= 4;
-					else if (_hardBP[i - 1].type == HB_IO)
-						RW |= 0xc;
+					if (i > 1) {
+						if (_hardBP[i - 1].type == HB_ACCESS)
+							RW |= 4;
+						else if (_hardBP[i - 1].type == HB_IO)
+							RW |= 0xc;
+					}
 					dr7 = (RW << (4 * i + 16)) | L;
 				}
 			}
@@ -358,4 +421,175 @@ int DebugHelper::WriteModifiedRegister(int backup) {
 		}
 	}
 	return ret;
+}
+
+// Sets hardware breakpoint and activates it. 80x86 compatible processors support 4 hardware breakpoints. If all available slots are in use, function asks user to delete one of active breakpoints. Returns 0 on success and -1 on error or if user cancelled action. It is allowed to call Sethardwarebreakpoint "on the fly", i.e. when debugged application is running.
+// 
+// Note that hardware breakpoints are not supported by Windows 95 and Windows 98. To assure that you can use this function, call Plugingetvalue(VAL_HARDBP).
+// 
+// int Sethardwarebreakpoint(ulong addr,int size,int type);
+// 
+// Parameters:
+// 
+// addr - address of breakpoint;
+// 
+// size - size of memory covered by hardware breakpoint (1, 2 or 4 bytes). addr must be aligned on the corresponding boundary. This parameter must be 1 in case of breakpoint on execution;
+// 
+// type - type of hardware breakpoint:
+// 
+// HB_CODE Active on command execution
+// HB_ACCESS   Active on read/write access
+// HB_WRITE    Active on write access
+// 
+// OllyDbg Plugin API v1.10
+int DebugHelper::Sethardbreakpoint(ulong addr, int size, int type) {
+	ulong bpAddress;
+
+	if (!g_enableHBrkPoint) {
+		return -1;
+	}
+	if (type == HB_STOPAN || type == HB_CODE || type == HB_ONESHOT || type == HB_TEMP) {
+		size = 1;
+	}
+	else if (type == HB_IO) {
+		bpAddress = addr;
+	}
+	else if (type && (addr & (size - 1)) != 0)
+		return -1;
+	if (size != 1 && size != 2 && size != 4)
+		return -1;
+
+	bool find = false;
+	for (int i = 0; i < 4; i++) {
+		int bpType = _hardBP[i].type;
+		if (bpType && type == bpType) {
+			if (bpAddress >= _hardBP[i].addr && _hardBP[i].size + _hardBP[i].addr < bpAddress + size) {
+				_hardBP[i].addr = bpAddress;
+				_hardBP[i].size = size;
+				find = true;
+			}
+		}
+	}
+	if (!find) {
+		if (type == HB_ONESHOT || type == HB_STOPAN || type == HB_TEMP)
+			return -1;
+		int i = 0;
+		do
+		{
+			int bpType = _hardBP[i].type;
+			if (!bpType)
+				break;
+			i++;
+		} while (i<4);
+		if (i >= 4) {
+			// There is no free slot for a new hardware breakpoint.
+			return -1;
+		}
+		_hardBP[i].addr = bpAddress;
+		_hardBP[i].size = size;
+		_hardBP[i].type = type;
+	}
+	if (g_Status == STAT_RUNNING && type != HB_ONESHOT && type != HB_STOPAN && type != HB_TEMP) {
+		int n = ThreadHelper::GetThreadCount();
+		if (!n) {
+			// Internal error: don't know how to set hardware breakpoint.
+			return -1;
+		}
+		auto threads = ThreadHelper::GetThreads();
+		for (int i = 0; i < n; i++) {
+			t_thread t = threads[i];
+			SuspendThread(t.handle);
+		}
+		for (int i = 0; i < n; i++) {
+			t_thread t = threads[i];
+			CONTEXT ctx;
+			ctx.ContextFlags = CONTEXT_DEBUG_REGISTERS;
+			if (::GetThreadContext(t.handle, &ctx)) {
+				ctx.Dr0 = _hardBP[0].addr;
+				ctx.Dr1 = _hardBP[1].addr;
+				ctx.Dr2 = _hardBP[2].addr;
+				ctx.Dr3 = _hardBP[3].addr;
+				int RW;
+				DWORD dr7 = 0x400;
+				for (int i = 0; i < 4; i++) {
+					if (_hardBP[i].type && (g_DbgInfo.bpType & 1) == 0) {
+						int L = (1 << (2 * i)) | dr7;
+						switch (_hardBP[i].type)
+						{
+							case HB_CODE:
+							case HB_ONESHOT:
+							case HB_STOPAN:
+							case HB_TEMP:
+								RW = 0;// 仅当执行对应地址的指令时中断
+								if (i - 1 > 0)
+									_hardBP[i - 1].type = HB_CODE;
+								break;
+
+							case HB_ACCESS:
+								RW = 3;// 当向对应地址读写数据时都中断，但是从地址读取指令除外
+								L |= 0x100;// LE 局部断点 486开始的处理器忽略这个设置
+								break;
+
+							case HB_WRITE:
+								RW = 1;// 仅当向地址写数据时中断
+								L |= 0x100;
+								break;
+
+							case HB_IO:
+								RW = 2;// 当向相应地址进行I/O读写时中断
+								L |= 0x100;
+								break;
+							default:
+								RW = 0;
+								break;
+						}
+						if (i > 1) {
+							if (_hardBP[i - 1].type == HB_ACCESS)
+								RW |= 4;
+							else if (_hardBP[i - 1].type == HB_IO)
+								RW |= 0xc;
+						}
+						dr7 = (RW << (4 * i + 16)) | L;
+					}
+				}
+				ctx.Dr7 = dr7;
+				::SetThreadContext(t.handle, &ctx);
+			}
+		}
+
+		for (int i = 0; i < n; i++) {
+			t_thread t = threads[i];
+			::ResumeThread(t.handle);
+		}
+	}
+	return 0;
+}
+
+// Suspends all threads of the process being debugged. 
+// It may happen (especially when logging breakpoints are set or hit trace is active) that threads will be suspended after some breakpoint is executed but corresponding debug event is not processed. 
+// If you want OllyDbg to process events before returning from Suspendprocess, call it with processevents=1. 
+// Returns 0 on success and -1 in case of any error. 
+// To resume execution, call Go. This function is slow on Win95-bases systems.
+// 
+// int Suspendprocess(int processevents);
+// 
+// Parameters:
+// 
+// processevents - process pending debugging events before return.
+// 
+// 
+// 
+// OllyDbg Plugin API v1.10
+int DebugHelper::Suspendprocess(int processevents) {
+	ulong tid;
+
+	tid = ThreadHelper::Runsinglethread(0);
+	g_DbgInfo.eventType = 4;
+	g_DbgInfo.expIp = 0;
+	g_DbgInfo.bpType = 0;
+	g_DbgInfo.enableMemBp = 0;
+	g_DbgInfo.expTid = 0;
+
+
+	return 0;
 }

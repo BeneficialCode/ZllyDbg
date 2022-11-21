@@ -358,10 +358,8 @@ typedef unsigned long  ulong;          // Unsigned long
 #define DISASM_HLSHIFT 16              // Shift to extract highlighting mode
 
 #define DBG_NONE	(0x0)
-#define DBG_ATTACH	(0x1)
-#define DBG_CREATE	(0x2)
-#define DBG_DLL		(0x3)
-#define DBG_UNKNOWN (0x4)
+#define DBG_ATTACH	(0x2)
+#define DBG_CREATE	(0x1)
 
 
 ////////////////////////////////////////////////////////////////////////////////

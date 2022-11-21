@@ -13,15 +13,13 @@ DbgInfo g_DbgInfo;
 LRESULT CAttachDlg::OnAttach(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/) {
 	int row = m_ProcTable->m_Table.data.selected;
 	auto process = m_ProcTable->Getsortedbyselection(row);
-	g_DbgInfo.Pid = process.Pid;
-	g_DbgInfo.DbgType = DBG_ATTACH;
+	g_DbgInfo.pid = process.Pid;
+	g_DbgInfo.dbgType = DBG_ATTACH;
 	
 	// _hThread.reset(::CreateThread(nullptr, 0, DebugThread, &g_DbgInfo, 0, nullptr));
-	::DebugActiveProcess(g_DbgInfo.Pid);
+	::DebugActiveProcess(g_DbgInfo.pid);
 	g_Status = STAT_RUNNING;
-	g_DbgInfo.hEvent = ::CreateEvent(nullptr, FALSE, FALSE, nullptr);
 	g_isNeedListmodule = true;
-	g_DbgInfo.ContinueStatus = DBG_EXCEPTION_NOT_HANDLED;
 
 	EndDialog(0);
 

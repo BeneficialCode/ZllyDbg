@@ -52,13 +52,16 @@
 #define ID_APP_OPTIONS                  32801
 #define ID_APP_APPEAR                   32802
 #define ID_VIEW_REFERS                  32803
+#define ID_DEBUG_RUN                    32805
+#define ID_DEBUG_PAUSE                  32806
+#define ID_DEBUG_STEPOVER               32807
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        219
-#define _APS_NEXT_COMMAND_VALUE         32805
+#define _APS_NEXT_COMMAND_VALUE         32808
 #define _APS_NEXT_CONTROL_VALUE         1006
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

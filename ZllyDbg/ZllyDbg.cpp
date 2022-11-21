@@ -72,7 +72,7 @@ HWND g_hModuleFrm, g_hThreadFrm, g_hMemoryFrm, g_hCpuFrm, g_hBpFrm;
 
 int Run(LPTSTR /*lpstrCmdLine*/ = NULL, int nCmdShow = SW_SHOWDEFAULT)
 {
-	//CMessageLoop theLoop;
+	 CMessageLoop theLoop;
 	/*_Module.AddMessageLoop(&theLoop);*/
 
 	InitColorSys();

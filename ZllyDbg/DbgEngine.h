@@ -18,18 +18,42 @@
 #define PP_ACCESS              0x0200  // Access violation
 #define PP_GUARDED             0x0400  // Guarded page
 
+
 struct DbgInfo {
-	DWORD Pid;
-	int DbgType;
-	int EventTID;
+	int eventType;
+	int enableMemBp;
+	DWORD expTid;
+	int expIp;
+	int _ecx;
+	int bpType;
 	DEBUG_EVENT Event;
-    int BpType;
-    int StepMode;
-    ulong ECX;
-    ulong ExpAddr;
-	int GiveChance;
+	int reason;
+	int stepmode;
+	int givechance;
+	int refresh;
+	DWORD exception;
+	int dbgType;
+	DWORD pid;
 	HANDLE hEvent;
-	DWORD ContinueStatus;
+	int stopOnDllLoad;
+	int decodeSSERegistry;
+	int enableLastError;
+	int ignoreAccessViolationsInKernel32;
+	int ignoreInt3;
+	int ignoreTrap;
+	int ignoreAccessViolations;
+	int ignoreDivisionByZero;
+	int ignoreIllegalCmd;
+	int ignoreFPUExceptions;
+	int stopOnDebugStrings;
+	int warnWhenBreakNotInCode;
+	int autoReturn;
+	int animation;
+	int saveOrgCmdInTrace;
+	int showTracedEsp;
+	int showTracedFlags;
+	int animateOverSysDLLs;
+	int traceOverStringCmds;
 	wchar_t Name[MAX_PATH];
 	wchar_t CurDir[MAX_PATH];
 	wchar_t ExePath[MAX_PATH];
@@ -40,10 +64,10 @@ extern DbgInfo g_DbgInfo;
 
 extern int g_Status;
 
-
 struct DbgEngine final abstract {
-	static void DebugEventHandler();
-	static void ExceptionHandler(t_reg* reg);
+	static int DebugEventHandler();
+	static int ExceptionHandler();
+	static int FilterException(DWORD code,int ignore);
 	static void OnCreateThread();
 	static void OnCreateProcess();
 	static void OnExitThread();
@@ -54,6 +78,9 @@ struct DbgEngine final abstract {
 	static void OnRip();
 	static void SetStatus(int status);
 	static int Run();
-	static DWORD WINAPI DebugThread(void* param);
+	static void UpdateDumps();
+	static bool OnKeyDown(UINT uMsg, WPARAM wParam, int alt , int shift, int ctrl);
+private:
+	static inline t_reg* _reg;
 };
 

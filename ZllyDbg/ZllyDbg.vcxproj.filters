@@ -153,6 +153,9 @@
     <ClCompile Include="InfoHelper.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="DbgDefender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="InfoHelper.h">
       <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="DbgDefender.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

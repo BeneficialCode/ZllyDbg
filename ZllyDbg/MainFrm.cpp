@@ -132,9 +132,26 @@ LRESULT CMainFrame::OnFileOpen(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCt
 		L"Executables (*.exe)\0*.exe\0AllFiles (*.*)\0*.*\0", *this);
 	if (dlg.DoModal() == IDOK) {
 		wcscpy_s(g_DbgInfo.ExePath, dlg.m_szFileName);
-		g_DbgInfo.DbgType = DBG_CREATE;
+		CString curDir = dlg.m_szFileName;
+		int pos = curDir.ReverseFind(L'\\') + 1;
+		dlg.m_szFileName[pos] = L'\0';
+		curDir = dlg.m_szFileName;
+
+		g_DbgInfo.dbgType = DBG_CREATE;
 		/*HANDLE hThread = ::CreateThread(nullptr, 0, DebugThread, nullptr, 0, nullptr);
 		CloseHandle(hThread);*/
+		STARTUPINFO si{ sizeof(si) };
+		PROCESS_INFORMATION pi;
+		if (::CreateProcess(nullptr, g_DbgInfo.ExePath, 0, 0, 0,
+			// 只调试被调试进程，不调试它的子进程。被调试程序在一个新的控制台窗口中输出信息
+			DEBUG_ONLY_THIS_PROCESS | CREATE_NEW_CONSOLE | NORMAL_PRIORITY_CLASS | CREATE_DEFAULT_ERROR_MODE,
+			0, curDir, &si, &pi)) {
+			g_hProcess = pi.hProcess;
+			g_hMainThread = pi.hThread;
+			g_DbgInfo.pid = pi.dwProcessId;
+			g_mainThreadId = pi.dwThreadId;
+			DbgEngine::SetStatus(STAT_RUNNING);
+		}
 	}
 	return 0;
 }

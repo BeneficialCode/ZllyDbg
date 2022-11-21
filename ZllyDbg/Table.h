@@ -71,7 +71,7 @@ struct t_thread {
 	int	suspendcount;	// 线程挂起次数
 	CONTEXT context;	// 线程上下文
 	t_reg reg;			// 寄存器上下文
-	int	regvalid;		// reg是否有效
+	int	regvalid = 0;	// reg是否有效
 	t_reg oldreg;		// 旧的线程上下文
 	int oldregvalid;	// oldreg是否有效
 };

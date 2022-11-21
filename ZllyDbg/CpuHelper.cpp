@@ -56,7 +56,7 @@ void CpuHelper::Setcpu(ulong threadid, ulong asmaddr, ulong dumpaddr, ulong stac
 	t_memory* mem;
 	ulong selAddr = asmaddr;
 
-	if (g_DbgInfo.Pid) {
+	if (g_DbgInfo.pid) {
 		if (mode & CPU_RUNTRACE) {
 
 		}
@@ -78,7 +78,7 @@ void CpuHelper::Setcpu(ulong threadid, ulong asmaddr, ulong dumpaddr, ulong stac
 				threadid = g_mainThreadId;
 				t = ThreadHelper::Findthread(threadid);
 			}
-			g_DbgInfo.EventTID = threadid;
+			g_DbgInfo.expTid = threadid;
 			g_cpuThreadId = threadid;
 			CAsmWindow::_dump.threadid = threadid;
 			if (t && t->regvalid) {

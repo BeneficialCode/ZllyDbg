@@ -238,3 +238,11 @@ void ThreadHelper::Restroeallthreads() {
 		}
 	}
 }
+
+int ThreadHelper::GetThreadCount() {
+	return CThreadFrame::m_ThreadTable->m_Table.data.n;
+}
+
+std::vector<t_thread>& ThreadHelper::GetThreads() {
+	return CThreadFrame::m_ThreadTable->m_Table.data.info;
+}

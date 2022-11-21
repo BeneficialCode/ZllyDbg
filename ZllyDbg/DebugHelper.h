@@ -59,11 +59,13 @@ struct DebugHelper abstract final {
 	static int Go(ulong threadid, ulong tilladdr, int stepmode, int givechance, int backupregs);
 	static int Setbreakpoint(ulong addr, ulong type, uchar cmd);
 	static int Setbreakpointtext(ulong addr, ulong type, char cmd, ulong passcount);
+	static int Sethardbreakpoint(ulong addr, int size, int type);
+	static void Tempbreakpoint(ulong addr, int mode);
 	static void Animate(int animation);
 	static int ContinueExecute(ulong threadid, int givechance, int backupregs, int bypass);
 	static int WriteModifiedRegister(int backup);
-private:
-	static inline int _animation;
+	static int Suspendprocess(int processevents);
+
 	static inline int _hardBpType;
 	static inline t_hardbpoint _hardBP[4];
 };

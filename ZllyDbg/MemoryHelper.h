@@ -20,7 +20,10 @@ public:
 
 	template <typename val>
 	static val Writememory(uintptr_t addr,val x) {
+		DWORD old;
+		//::VirtualProtect((LPBYTE*)addr, sizeof(x), PAGE_READWRITE, &old);
 		::WriteProcessMemory(g_hProcess, (LPBYTE*)addr, &x, sizeof(x), nullptr);
+		//::VirtualProtect((LPBYTE*)addr, sizeof(x), old, nullptr);
 		return x;
 	}
 

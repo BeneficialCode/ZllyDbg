@@ -43,6 +43,12 @@ BEGIN
         MENUITEM "&Threads",                    ID_VIEW_THREADS
         MENUITEM "&CPU\tAlt+C",                 ID_VIEW_CPU
     END
+    POPUP "&Debug"
+    BEGIN
+        MENUITEM "&Run\tF9",                    ID_DEBUG_RUN
+        MENUITEM "&Pause\tF12",                 ID_DEBUG_PAUSE
+        MENUITEM "Step &over\tF8",              ID_DBG_STEPOVER
+    END
     POPUP "&Window"
     BEGIN
         MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
@@ -205,6 +211,12 @@ BEGIN
         MENUITEM "&Threads",                    ID_VIEW_THREADS
         MENUITEM "&CPU\tAlt+C",                 ID_VIEW_CPU
     END
+    POPUP "&Debug"
+    BEGIN
+        MENUITEM "&Run\tF9",                    ID_DEBUG_RUN
+        MENUITEM "&Pause\tF12",                 ID_DEBUG_PAUSE
+        MENUITEM "Step &over\tF8",              ID_DBG_STEPOVER
+    END
     POPUP "&Help"
     BEGIN
         MENUITEM "&About ZllyDbg",              ID_APP_ABOUT
@@ -263,6 +275,14 @@ BEGIN
 END
 
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
+
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -295,8 +315,6 @@ END
 
 IDR_MAINFRAME TOOLBAR 17, 17
 BEGIN
-    BUTTON      ID_FILE_NEW
-    SEPARATOR
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_DBG_RESTART
     BUTTON      ID_DBG_CLOSE
@@ -332,14 +350,6 @@ BEGIN
     BUTTON      ID_APP_APPEAR
     BUTTON      ID_APP_ABOUT
 END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
-IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
